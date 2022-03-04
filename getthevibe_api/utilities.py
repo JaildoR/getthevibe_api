@@ -1,2 +1,1 @@
 ### Usefull functions ###
-
