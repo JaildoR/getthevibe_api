@@ -3,6 +3,11 @@ import pandas as pd
 import numpy as np
 from PIL import Image
 
+#config
+img = Image.open('haut_de_page.jpg')
+st.set_page_config(page_title = 'Get The Vibe', page_icon = img)
+
+#logo title
 logo = Image.open('get the vibe .png')
 st.image(logo)
 #title of the app
