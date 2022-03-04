@@ -4,7 +4,7 @@ import numpy as np
 from PIL import Image
 
 #config
-img = Image.open('haut_de_page.jpeg')
+img = Image.open('haut_de_page.jpg')
 st.set_page_config(page_title = 'Get The Vibe', page_icon = img)
 
 #title of the app
