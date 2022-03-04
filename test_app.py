@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from PIL import Image
-from annotated_text import annotated_text
 
 #title of the app
 #st.title("Get The Vibe")
