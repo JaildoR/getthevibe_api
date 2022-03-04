@@ -6,8 +6,8 @@ from PIL import Image
 #title of the app
 st.title("Get The Vibe")
 
-#file downloader
-file = st.file_uploader("Pick a picture")
+#file downloaders
+file= st.file_uploader("Upload Images", type=["png","jpg","jpeg"])
 
 #shows the picture if there is one
 if file == None :
