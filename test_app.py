@@ -7,13 +7,10 @@ from PIL import Image
 img = Image.open('haut_de_page.jpg')
 st.set_page_config(page_title = 'Get The Vibe', page_icon = img)
 
-#logo title
+#title of the app
 logo = Image.open('get the vibe .png')
 st.image(logo)
-#title of the app
-#st.title("Get The Vibe")
-#title = '<p style="font-family:sans-serif; color:blue; font-size: 50px;">Get the vibe</p>'
-#st.markdown(title, unsafe_allow_html=True)
+
 
 #file downloader
 file= st.file_uploader("Upload Image", type=["png","jpg","jpeg"])
@@ -33,6 +30,18 @@ st.header('or upload directly from your camera :')
 picture = st.camera_input("Take a picture")
 if picture:
      st.image(picture)
+
+#hiding 'made with streamlit'
+hide_ad = """
+        <style>
+        footer {visibility: hidden;}
+        </style>
+        """
+st.markdown(hide_ad, unsafe_allow_html = True)
+
+st.write('test')
+
+
 
 
 #if we want to download the file in the computer
