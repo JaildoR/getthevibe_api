@@ -38,6 +38,8 @@ hide_ad = """
         """
 st.markdown(hide_ad, unsafe_allow_html = True)
 
+st.write('test')
+
 
 
 #if we want to download the file in the computer
