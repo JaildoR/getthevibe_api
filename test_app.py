@@ -2,12 +2,13 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from PIL import Image
-from annotated_text import annotated_text
 
+logo = Image.open('get the vibe .png')
+st.image(logo)
 #title of the app
 #st.title("Get The Vibe")
-title = '<p style="font-family:sans-serif; color:blue; font-size: 50px;">Get the vibe</p>'
-st.markdown(title, unsafe_allow_html=True)
+#title = '<p style="font-family:sans-serif; color:blue; font-size: 50px;">Get the vibe</p>'
+#st.markdown(title, unsafe_allow_html=True)
 
 #file downloader
 file= st.file_uploader("Upload Image", type=["png","jpg","jpeg"])
