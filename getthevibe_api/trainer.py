@@ -1,3 +1,5 @@
+### JA: Package - General file using other files like data and utilities
+
 ### Imports ###
 
 # General libraries
