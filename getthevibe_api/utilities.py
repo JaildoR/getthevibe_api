@@ -1,1 +1,2 @@
-### JA: Package - General unsefull functions
+### Usefull functions ###
+

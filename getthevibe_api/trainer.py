@@ -1,4 +1,8 @@
-### JA: Package - General file using other files like data and utilities
+
+### General training file ###
+
+### JA: in future: convert into trainer class: like in lecture ML iteration CH4
+
 
 ### Imports ###
 
@@ -20,10 +24,6 @@ from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.utils import to_categorical
 
 
-def get_data():
-    """fuction to get the training data (or a portion of it) from data folder"""
-    image_df = pd.read_csv("data/fer2013.csv")
-    return image_df
 
 def preprocess(image_df):
     """function that pre-process the data"""
