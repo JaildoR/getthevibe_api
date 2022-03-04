@@ -11,6 +11,7 @@ st.set_page_config(page_title = 'Get The Vibe', page_icon = img)
 logo = Image.open('get the vibe .png')
 st.image(logo)
 
+
 #file downloader
 file= st.file_uploader("Upload Image", type=["png","jpg","jpeg"])
 
@@ -39,6 +40,7 @@ hide_ad = """
 st.markdown(hide_ad, unsafe_allow_html = True)
 
 st.write('test')
+
 
 
 
