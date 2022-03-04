@@ -1,6 +1,8 @@
+
 ### General training file ###
 
 ### JA: in future: convert into trainer class: like in lecture ML iteration CH4
+
 
 ### Imports ###
 
@@ -20,6 +22,7 @@ from tensorflow.keras import models
 from tensorflow.keras import Sequential, layers
 from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.utils import to_categorical
+
 
 
 def preprocess(image_df):
