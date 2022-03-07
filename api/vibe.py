@@ -22,17 +22,8 @@ app.add_middleware(
 def index():
     return {"Message": "They see me rollin'... They hatin'"}
 
-@app.get("/predict")
 
-def predict(picture):
-
-    im = PIL.Image.open(picture).convert('L')
-    im = im.resize((48, 48), PIL.Image.ANTIALIAS)
-    im = np.array(im)
-
-    return {'Pixels':im}
-
-@app.post("/")
+@app.post("/vibecheck")
 
 def image_filter(file: bytes = File(...)):
     pil_image = (PIL.Image.open(BytesIO(file))
