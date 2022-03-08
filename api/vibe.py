@@ -26,6 +26,7 @@ def index():
 @app.post("/vibecheck")
 
 def image_filter(file: bytes = File(...)):
+
     pil_image = (PIL.Image.open(BytesIO(file))
                  .convert('L')
                  .resize((48, 48), PIL.Image.ANTIALIAS))
