@@ -1,25 +1,14 @@
-
-### General training file ###
-
-### JA: in future: convert into trainer class: like in lecture ML iteration CH4
-
-
-### Imports ###
-
-# General libraries
+from pyexpat import model
+from getthevibe_api.data import get_data_from_gcp
+from termcolor import colored
 import numpy as np
 import pandas as pd
-
-# Image related
-import matplotlib.pyplot as plt
-from matplotlib import image
-from keras.preprocessing.image import load_img, img_to_array
-import os
+import joblib
+from getthevibe_api.params import *
+from google.cloud import storage
 
 # CNN
-import tensorflow as tf
-from tensorflow.keras import models
-from tensorflow.keras import Sequential, layers
+from tensorflow.keras import models, layers
 from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.utils import to_categorical
 
@@ -46,7 +35,7 @@ def preprocess(image_df):
     y_cat_train = to_categorical(y_train, num_classes=7)
     y_cat_test = to_categorical(y_test, num_classes=7)
     y_cat_val = to_categorical(y_val, num_classes=7)
-    return X_train, y_cat_train
+    return X_train, y_cat_train, X_val, y_cat_val
 
 def initialize_model_bl():
     """function that pre-process the data"""
@@ -75,32 +64,57 @@ def compile_model_bl(model_bl):
                 metrics=['accuracy'])
     return model_bl
 
-def fit_model_bl(model_bl, X_train, y_cat_train):
+def fit_model_bl(model_bl, X_train, y_cat_train, X_val, y_cat_val):
     """function that fits the model"""
-    es = EarlyStopping(patience=20)
+    es = EarlyStopping(patience=2)
+
     history_bl = model_bl.fit(X_train, y_cat_train,
-                    epochs=200,
+                    epochs=1,
                     batch_size=32,
                     verbose=1,
-                    validation_split=0.3,
+                    validation_data=(X_val, y_cat_val),
                     callbacks=[es])
     return history_bl
 
+def save_model(model):
+    """Save the model into a .joblib and upload it on Google Storage /models folder
+    HINTS : use sklearn.joblib (or jbolib) libraries and google-cloud-storage"""
+    joblib.dump(model, 'model.joblib')
+    print(colored("model.joblib saved locally", "green"))
 
-"""
+def save_model_to_gcp(model, local_model_name="model.joblib"):
+        """Save the model into a .joblib and upload it on Google Storage /models folder
+        HINTS : use sklearn.joblib (or jbolib) libraries and google-cloud-storage"""
+        # saving the trained model to disk (which does not really make sense
+        # if we are running this code on GCP, because then this file cannot be accessed once the code finished its execution)
+        save_model(model)
+        client = storage.Client().bucket(BUCKET_NAME)
+        storage_location = f"models/{MODEL_NAME}/{MODEL_VERSION}/{local_model_name}"
+        blob = client.blob(storage_location)
+        blob.upload_from_filename(local_model_name)
+        print(
+            "uploaded model.joblib to gcp cloud storage under \n => {}".format(
+                storage_location))
+
 if __name__ == '__main__':
     # get training data from GCP bucket
-    df = get_data()
+    print(colored("Get the data from the bucket", "red"))
+
+    df = get_data_from_gcp()
 
     # preprocess data
-    X_train, y_train = preprocess(df)
+    print(colored("Preprocessing...", "green"))
+    X_train, y_train, X_val, y_cat_val = preprocess(df)
 
     # train model (locally if this file was called through the run_locally command
     # or on GCP if it was called through the gcp_submit_training, in which case
     # this package is uploaded to GCP before being executed)
-    reg = train_model(X_train, y_train)
+    print(colored("Initializing model", "green"))
+    model = initialize_model_bl()
+    model = compile_model_bl(model)
+
+    print(colored("Training the model", "red"))
+    history = fit_model_bl(model,X_train, y_train, X_val, y_cat_val)
 
     # save trained model to GCP bucket (whether the training occured locally or on GCP)
-    save_model(reg)
-
-"""
+    save_model_to_gcp(model)
