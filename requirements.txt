@@ -1,6 +1,8 @@
 pytest
 pylint
 ipdb
+google-cloud-storage==2.1.0
+gcsfs
 jupyterlab
 tensorflow==2.7.0
 numpy
