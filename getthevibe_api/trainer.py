@@ -39,22 +39,26 @@ def preprocess(image_df):
 
 def initialize_model_bl():
     """function that pre-process the data"""
+    model = models.Sequential()
 
-    model_bl = models.Sequential()
+    model.add(models.Conv2D(16, (2, 2),
+                 strides = (1,1),
+                 input_shape=(48, 48, 1),
+                 activation='relu'))
 
-    model_bl.add(layers.Conv2D(filters = 16, kernel_size=(3, 3), strides=(2,2), activation='relu', padding='same', input_shape=(48, 48, 1)))
-    model_bl.add(layers.MaxPool2D(pool_size=(3,3)))
+    model.add(models.MaxPooling2D(pool_size=(2, 2)))
 
-    model_bl.add(layers.Conv2D(32, kernel_size=(2,2), activation='relu'))
-    model_bl.add(layers.MaxPool2D(pool_size=(2,2)))
+    model.add(models.Conv2D(32, (3, 3), activation='relu'))
+    model.add(models.MaxPooling2D(pool_size=(2, 2)))
 
-    model_bl.add(layers.Conv2D(32, kernel_size=(2,2), activation='relu'))
-    model_bl.add(layers.MaxPool2D(pool_size=(2,2)))
+    model.add(models.Conv2D(64, (3, 3), padding='same', activation='relu'))
+    model.add(models.MaxPooling2D(pool_size=(2, 2)))
 
-    model_bl.add(layers.Flatten())
-    model_bl.add(layers.Dense(7, activation='softmax'))
+    model.add(models.Flatten())
+    model.add(models.Dense(50, activation='relu'))
+    model.add(models.Dense(7, activation='softmax'))
 
-    return model_bl
+    return model
 
 
 def compile_model_bl(model_bl):
