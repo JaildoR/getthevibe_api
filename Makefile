@@ -75,7 +75,7 @@ set_project:
 create_bucket:
 	@gsutil mb -l ${REGION} -p ${PROJECT_ID} gs://${BUCKET_NAME}
 
-LOCAL_PATH="raw_data/fer_aug.2013.csv"
+LOCAL_PATH="raw_data/fer_aug2013.csv"
 
 # bucket directory in which to store the uploaded file (`data` is an arbitrary name that we choose to use)
 BUCKET_FOLDER=data
@@ -107,4 +107,6 @@ gcp_submit_training:
   --python-version=${PYTHON_VERSION} \
   --runtime-version=${RUNTIME_VERSION} \
   --region ${REGION} \
-  --stream-logs
+  --stream-logs \
+	--scale-tier CUSTOM \
+	--master-machine-type n1-highmem-8
