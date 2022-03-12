@@ -39,7 +39,7 @@ BUCKET_TRAIN_DATA_PATH = 'data/fer_aug2013.csv'
 MODEL_NAME = 'insane'
 
 # model version folder name (where the trained model.joblib file will be stored)
-MODEL_VERSION = 'v3'
+MODEL_VERSION = 'v4'
 
 ### GCP AI Platform - - - - - - - - - - - - - - - - - - - -
 
