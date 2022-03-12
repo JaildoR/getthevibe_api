@@ -41,13 +41,13 @@ def initialize_model_bl():
     """function that pre-process the data"""
     model_bl = models.Sequential()
 
-    model_bl.add(layers.Conv2D(filters = 16, kernel_size=(3, 3), activation='relu', padding='same', input_shape=(48, 48, 1)))
-    model_bl.add(layers.MaxPool2D(pool_size=(3,3)))
-
-    model_bl.add(layers.Conv2D(32, kernel_size=(2,2), strides=(2,2), activation='relu'))
+    model_bl.add(layers.Conv2D(filters = 16, kernel_size=(5, 5), activation='relu', padding='same', input_shape=(48, 48, 1)))
     model_bl.add(layers.MaxPool2D(pool_size=(2,2)))
 
-    model_bl.add(layers.Conv2D(32, kernel_size=(2,2), activation='relu'))
+    model_bl.add(layers.Conv2D(32, kernel_size=(3,3), strides=(2,2), activation='relu'))
+    model_bl.add(layers.MaxPool2D(pool_size=(2,2)))
+
+    model_bl.add(layers.Conv2D(32, kernel_size=(3,3), activation='relu'))
     model_bl.add(layers.MaxPool2D(pool_size=(2,2)))
 
     model_bl.add(layers.Flatten())
