@@ -76,7 +76,7 @@ def image_filter(file: bytes = File(...)):
 
     emotion_df = (emotion_df
                   .sort_values(by='Percentage',ascending=False)
-                  .head(3).to_dict())
+                  .head(3).reset_index(drop=True))
 
     image_to_draw = PIL.ImageDraw.Draw(image)
 
@@ -111,5 +111,5 @@ def image_filter(file: bytes = File(...)):
     filtered_image.seek(0)
 
     return StreamingResponse(filtered_image,
-                             headers={'emotion_df':str(emotion_df)},
+                             headers={'emotion_df':emotion_df.to_json()},
                              media_type="image/jpeg")
