@@ -1,3 +1,4 @@
+from email import header
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
@@ -5,11 +6,13 @@ from io import BytesIO
 from tensorflow import expand_dims
 from retinaface import RetinaFace
 
+from fastapi.encoders import jsonable_encoder
 import PIL.Image, PIL.ImageDraw, PIL.ImageFont
 import cv2 # Problem???
 import joblib
 import numpy as np
 import pandas as pd
+import json
 
 
 app = FastAPI()
@@ -73,7 +76,7 @@ def image_filter(file: bytes = File(...)):
 
     emotion_df = (emotion_df
                   .sort_values(by='Percentage',ascending=False)
-                  .head(3))
+                  .head(3).to_dict())
 
     image_to_draw = PIL.ImageDraw.Draw(image)
 
@@ -108,4 +111,5 @@ def image_filter(file: bytes = File(...)):
     filtered_image.seek(0)
 
     return StreamingResponse(filtered_image,
+                             headers={'emotion_df':str(emotion_df)},
                              media_type="image/jpeg")

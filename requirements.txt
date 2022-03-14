@@ -14,4 +14,4 @@ fastapi
 uvicorn
 python-multipart
 retina-face
-cv2
+opencv-python==4.5.5.64
